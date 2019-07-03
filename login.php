@@ -49,10 +49,10 @@
                             <center>Student Login</center>
                             </div>
 <input type="hidden" name="action" value="login">
-
+ 
                                 <div class="form-field">
-									<label for = "username">Username: </label><br/>
-										<input class="form-control" placeholder="Enter Username" name="username" id="username" type="text" required = "required" autofocus>
+									<label for ="matric">Matric Number: </label><br/>
+										<input class="form-control" placeholder="Enter Matric Number" name="matric" id="matric" type="text" required = "required" autofocus>
                                 </div>
 
                                 <div class="form-field">

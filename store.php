@@ -102,6 +102,19 @@ return $select->fetchAll();
 }
 
 
+public static function getPaymentHistory($student, $fees){
+$conn = Database::getInstance();
+$select = $conn->db->prepare("SELECT * FROM payment WHERE studentId = ? AND feesId = ?");
+$select->execute(array($student, $fees));
+return $select;
+}
+public static function amountSumPaymentHistory($student, $fees){
+$conn = Database::getInstance();
+$conn = Database::getInstance();
+$select = $conn->db->prepare("SELECT sum(amount) FROM payment WHERE studentId = ? AND feesId = ?");
+$select->execute(array($student, $fees));
+return $select;
+}
 public static function getDeptList($faculty){
 $conn = Database::getInstance();
 $select = $conn->db->prepare("SELECT * FROM system_departmentdata WHERE fid_id = ? ");
@@ -112,7 +125,21 @@ return $select;
 public static function CreatedOn(){
 return   date('Y-m-d H:i:sa');
 }
-
+public static function formatMoney($number, $fractional=false) {
+    if ($fractional) {
+        $number = sprintf('%.2f', $number);
+    }
+    while (true) {
+        $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
+        if ($replaced != $number) {
+            $number = $replaced;
+        } else {
+            break;
+        }
+    }
+	return $number;
+   // return '&#8358;'. $number.'k';
+}
 #############################insert functions###########################################
 
 
@@ -269,6 +296,23 @@ if ($stmt->execute()): return 1; else: return 0;	endif;
 
 
 
+
+
+
+
+public static function makePayment($feesId,$studentId,$amount){
+$conn = Database::getInstance();
+
+	$now = self::CreatedOn();
+
+$stmt = $conn->db->prepare("INSERT INTO payment (feesId, studentId, amount, datePaid)
+																											VALUES (:feesId, :studentId, :amount, :created_on )");
+$stmt->bindParam(':feesId', $feesId, PDO::PARAM_STR);
+$stmt->bindParam(':studentId', $studentId, PDO::PARAM_STR);
+$stmt->bindParam(':amount', $amount, PDO::PARAM_STR);
+$stmt->bindParam(':created_on', $now, PDO::PARAM_STR);
+if ($stmt->execute()): return 1; else: return 0;	endif;
+ }
 
 
 public static function saveCandidate($POST,$FILES){

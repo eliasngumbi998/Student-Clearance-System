@@ -18,11 +18,8 @@
     });
     </script>
 
-    <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../plugins/fastclick/fastclick.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/app.min.js"></script>
+<script src="./dist/js/app.min.js"></script>
 <!-- PHP brush scripts-->
 <script src="./dist/js/shCore.js"></script>
 <script src="./dist/js/shBrushPhp.js"></script>
